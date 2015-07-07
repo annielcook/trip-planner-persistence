@@ -4,12 +4,10 @@ function eachKeyValue (obj, onEach) {
 	});
 }
 
-var days, currentDay;
+var days;
 
 $(document).ready(function () {
 	days = [];
-	currentDay = new Day();
-	currentDay.$button.addClass('current-day');
 	$.get('/days', function (data) {console.log('GET response data', data)})
-	//$.post('/days', function (data) {console.log('POST response data', data)})
+
 });

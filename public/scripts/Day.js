@@ -1,15 +1,31 @@
-var Day;
+var Day, currentDay;
 
 $(document).ready(function () {
-	Day = function () {
-		this.hotel = null;
-		this.restaurants = [];
-		this.thingsToDo = [];
-		this.number = days.push(this);
+
+
+
+	$.get('/days', function (data) {
+		if(data.length === 0) {
+			currentDay = new Day(null, [], [], 1);
+			currentDay.$button.addClass('current-day');
+		} else {
+			data.forEach(function(day){
+				new Day(day.hotel, day.restaurants, day.thingsToDo, day.number);
+			})
+
+		}
+	})
+
+	Day = function (h, rest, todo, num) {
+		this.hotel = h;
+		this.restaurants = rest;
+		this.thingsToDo = todo;
+		this.number = num;
 
 		this.buildButton()
 			.drawButton();
 	}
+
 
 	Day.prototype.buildButton = function () {
 		this.$button = $('<button class="btn btn-circle day-btn"></button>').text(this.number);
@@ -67,9 +83,13 @@ $(document).ready(function () {
 	};
 
 	$('#add-day').on('click', function () {
-		new Day();
-		$.post('/days', function (data) {console.log('POST response data', data)})
-		$.get('/days', function (data) {console.log('GET response data', data)})
+		
+		$.post('/days', function (data) {
+			console.log(data);
+			new Day(null, [], [], data.number);
+			$.get('/days', function (data2) {console.log('GET response data', data2)})
+		})
+		
 	});
 
 	$('#day-title > .remove').on('click', deleteCurrentDay);
