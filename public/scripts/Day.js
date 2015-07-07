@@ -6,13 +6,24 @@ $(document).ready(function () {
 
 	$.get('/days', function (data) {
 		if(data.length === 0) {
-			currentDay = new Day(null, [], [], 1);
-			currentDay.$button.addClass('current-day');
-		} else {
-			data.forEach(function(day){
-				new Day(day.hotel, day.restaurants, day.thingsToDo, day.number);
+			$.post('/days', function (){
+				currentDay = new Day(null, [], [], 1);
+				console.log(currentDay);
+				currentDay.$button.addClass('current-day');
 			})
-
+		} else {
+			var counter = 0;
+			data.forEach(function(day){
+				if (counter === 0){
+					currentDay = new Day(day.hotel, day.restaurants, day.thingsToDo, day.number);
+					currentDay.$button.addClass('current-day');
+				}else {
+					new Day(day.hotel, day.restaurants, day.thingsToDo, day.number);
+				}
+				counter++;
+				
+				
+			})
 		}
 	})
 
@@ -83,10 +94,8 @@ $(document).ready(function () {
 	};
 
 	$('#add-day').on('click', function () {
-		
 		$.post('/days', function (data) {
-			console.log(data);
-			new Day(null, [], [], data.number);
+		 new Day(null, [], [], data.number).switchTo();
 			$.get('/days', function (data2) {console.log('GET response data', data2)})
 		})
 		

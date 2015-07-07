@@ -5,6 +5,10 @@ $(document).ready(function () {
 		config.$all.find('.add').on('click', function () {
 			var attraction = config.$all.find(':selected').data();
 			new config.constructor(attraction);
+			//check current day
+			//post selected item to current day
+			var day_id = $.get('/days')
+			})
 		});
 		config.all.forEach(function (attraction) {
 			var $option = $('<option></option>').text(attraction.name).data(attraction);
