@@ -68,6 +68,8 @@ $(document).ready(function () {
 
 	$('#add-day').on('click', function () {
 		new Day();
+		$.post('/days', function (data) {console.log('POST response data', data)})
+		$.get('/days', function (data) {console.log('GET response data', data)})
 	});
 
 	$('#day-title > .remove').on('click', deleteCurrentDay);
