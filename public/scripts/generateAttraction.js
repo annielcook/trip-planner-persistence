@@ -5,11 +5,13 @@ $(document).ready(function () {
 		config.$all.find('.add').on('click', function () {
 			var attraction = config.$all.find(':selected').data();
 			new config.constructor(attraction);
-			//check current day
-			//post selected item to current day
-			var day_id = $.get('/days')
-			})
-		});
+			var id = attraction._id;
+			var temp = config.$all[0].id
+			var category = temp.substring(4, temp.length - 1);
+
+			$.post('/attraction/'+id+'/'+category, attraction);
+
+		})
 		config.all.forEach(function (attraction) {
 			var $option = $('<option></option>').text(attraction.name).data(attraction);
 			config.$all.find('select').append($option);

@@ -3,7 +3,8 @@ var express = require('express'),
 	bodyParser = require('body-parser'),
 	swig = require('swig'),
 	sassMiddleware = require('node-sass-middleware');
-    days = require('./routes/days')
+    days = require('./routes/days').dayRouter;
+    attraction = require('./routes/days').attractionRouter;
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use(express.static(__dirname + '/public'));
 // serve root
 app.use('/', require('./routes'));
 app.use('/days', days);
+app.use('/attraction/:id', attraction);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -8,7 +8,6 @@ $(document).ready(function () {
 		if(data.length === 0) {
 			$.post('/days', function (){
 				currentDay = new Day(null, [], [], 1);
-				console.log(currentDay);
 				currentDay.$button.addClass('current-day');
 			})
 		} else {

@@ -34,9 +34,9 @@ dayRouter.post('/', function(req, res, next) {
 dayRouter.get('/:id', function (req, res, next) {
     // serves a particular day as json
     models.Day
-    .findOne({req.params.id})
+    .findOne({_id: req.params.id})
     .exec(function (err, day){
-
+      res.json(day);
     })
 });
 // DELETE /days/:id
@@ -44,29 +44,37 @@ dayRouter.delete('/:id', function (req, res, next) {
     // deletes a particular day
 });
 
-dayRouter.use('/:id', attractionRouter);
+//dayRouter.use('/:id', attractionRouter);
 // POST /days/:id/hotel
 attractionRouter.post('/hotel', function (req, res, next) {
     // creates a reference to the hotel
+    console.log("request: ", req.body);
+    console.log("made it to hotel")
+    //res.send();
 });
 // DELETE /days/:id/hotel
 attractionRouter.delete('/hotel', function (req, res, next) {
     // deletes the reference of the hotel
 });
 // POST /days/:id/restaurants
-attractionRouter.post('/restaurants', function (req, res, next) {
+attractionRouter.post('/restaurant', function (req, res, next) {
     // creates a reference to a restaurant
+    console.log("made it to restaurants")
 });
 // DELETE /days/:dayId/restaurants/:restId
 attractionRouter.delete('/restaurant/:id', function (req, res, next) {
     // deletes a reference to a restaurant
 });
 // POST /days/:id/thingsToDo
-attractionRouter.post('/thingsToDo', function (req, res, next) {
+attractionRouter.post('/things-to-d', function (req, res, next) {
     // creates a reference to a thing to do
+    console.log("made it to things to d")
 });
 // DELETE /days/:dayId/thingsToDo/:thingId
-attractionRouter.delete('/thingsToDo/:id', function (req, res, next) {
+attractionRouter.delete('/things-to-d/:id', function (req, res, next) {
     // deletes a reference to a thing to do
 });
-module.exports = dayRouter;
+module.exports = {
+  dayRouter: dayRouter,
+  attractionRouter: attractionRouter
+}
